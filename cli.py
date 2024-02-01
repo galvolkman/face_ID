@@ -1,15 +1,17 @@
 import cv2
-import face_recognition
-"""
-# Load Camera
-cap = cv2.VideoCapture(0)
+import threading
+from deepface import DeepFace
+
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+counter = 0
+face_match = False
+ref_img = cv2.imread("img_gal.jpg")
+
 while True:
     ret, frame = cap.read()
-# Detect Faces
-    face_locations, face_names = sfr.detect_known_faces(frame)
-    for face_loc, name in zip(face_locations, face_names):
-        y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]"""
 
-
-image = face_recognition.load_image_file("img.jpg")
-face_locations = face_recognition.face_locations(image)
+    if ret:
+        pass
