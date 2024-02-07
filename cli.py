@@ -1,15 +1,54 @@
 import cv2
-import face_recognition
-"""
-# Load Camera
-cap = cv2.VideoCapture(0)
+import threading
+from deepface import DeepFace
+
+
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+counter = 0
+face_match = False
+
+ref_img = cv2.imread("img.jpg")
+
+
+def check_face():
+    global face_match
+    try:
+        if DeepFace.verify(frame, ref_img.copy())['verified']:
+            face_match = True
+        else:
+            face_match = False
+
+    except ValueError:
+        face_match = False
+
+
 while True:
     ret, frame = cap.read()
-# Detect Faces
-    face_locations, face_names = sfr.detect_known_faces(frame)
-    for face_loc, name in zip(face_locations, face_names):
-        y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]"""
+
+    if ret:
+        frame = cv2.flip(frame, 1)
+        if counter % 30 == 0:
+            try:
+                threading.Thread(target=check_face, args=(frame.copy(), )).start()
+            except ValueError:
+                pass
+
+        counter += 1
+
+        if face_match:
+            cv2.putText(frame, "match", (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 3)
+        else:
+            cv2.putText(frame, "No Match!", (20, 450), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 3)
+
+        cv2.imshow("video", frame)
 
 
-image = face_recognition.load_image_file("img.jpg")
-face_locations = face_recognition.face_locations(image)
+    key = cv2.waitKey(1)
+    if key == ord("q"):
+        break
+
+cv2.destroyAllWindows()
+
