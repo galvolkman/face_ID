@@ -11,9 +11,7 @@ if ret:
     frame = cv2.flip(frame, 1)
 
     cv2.imshow(name, frame)
-    while True:
 
-        key = cv2.waitKey(1)
-        if key == ord("q"):
-            break
+
+
 
