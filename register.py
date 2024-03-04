@@ -19,11 +19,11 @@ if ret:
         if key == ord("q"):
             break
 
-con = sqlite3.connect('test.db')
+con = sqlite3.connect('users1.db')
 cur = con.cursor()
 cur.execute("""
     INSERT INTO users VALUES
-        ('gal2', 'img.jpg')
+        ('gal2', 'img_gal.jpg')
 
 """)
 
