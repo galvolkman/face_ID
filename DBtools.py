@@ -27,11 +27,7 @@ def main():
     cur.execute("CREATE TABLE info(name TEXT NOT NULL, pic BLOB NOT NULL)")
 
     blob_pic = dbtools.jpg_to_blob('img_gal.jpg')
-    cur.execute("""f"
-        INSERT INTO info VALUES
-            ('gal', {blob_pic})"
-
-    """)
+    cur.execute('''INSERT INTO info VALUES (?,?)''', ('gal', blob_pic))
 
     con.commit()
 
