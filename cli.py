@@ -12,13 +12,13 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 counter = 0
 face_match = False
 
-ref_img = cv2.imread("img.jpg")
+ref_img = cv2.imread("img_gal.jpg")
 
 
 def check_face(frame):
     global face_match
 
-    known_image = face_recognition.load_image_file("img.jpg")
+    known_image = face_recognition.load_image_file("img_gal.jpg")
     unknown_image = frame
     known_encoding = face_recognition.face_encodings(known_image)[0]
     try:
