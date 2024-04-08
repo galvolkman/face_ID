@@ -2,8 +2,10 @@ import cv2
 import threading
 import face_recognition
 import ctypes
+import sqlite3
 import time
-
+con = sqlite3.connect('users.db')
+cur = con.cursor()
 
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -18,7 +20,7 @@ ref_img = cv2.imread("img_gal.jpg")
 def check_face(frame):
     global face_match
 
-    known_image = face_recognition.load_image_file("img_gal.jpg")
+    known_image = face_recognition.load_image_file(ref_img)
     unknown_image = frame
     known_encoding = face_recognition.face_encodings(known_image)[0]
     try:
